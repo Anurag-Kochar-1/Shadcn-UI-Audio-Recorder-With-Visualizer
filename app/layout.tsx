@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {" "}
-        <TooltipProvider>
+        <TooltipProvider delayDuration={0}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
