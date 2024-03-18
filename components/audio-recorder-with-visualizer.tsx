@@ -6,8 +6,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Mic, Send, Trash } from "lucide-react";
+import { Download, Mic, Trash } from "lucide-react";
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 type Record = {
   id: number;
@@ -34,7 +35,7 @@ const downloadBlob = (blob: Blob) => {
   document.body.removeChild(downloadLink);
 };
 
-export const AudioRecorder = () => {
+export const AudioRecorderWithVisualizer = () => {
   const { theme } = useTheme();
   // States
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -281,7 +282,15 @@ export const AudioRecorder = () => {
   }, [isRecording, theme]);
 
   return (
-    <div className="flex h-12 w-full items-center justify-center gap-4 max-w-5xl">
+    <div
+      className={cn(
+        "flex h-16 rounded-md w-full items-center justify-center gap-2 lg:gap-4 max-w-5xl",
+        {
+          "border p-2": isRecording,
+          "border-none p-0": !isRecording,
+        }
+      )}
+    >
       {isRecording ? (
         <Timer
           hourLeft={hourLeft}
@@ -294,11 +303,11 @@ export const AudioRecorder = () => {
       ) : null}
       <canvas
         ref={canvasRef}
-        className={`h-full w-full bg-secondary ${
+        className={`h-full w-full bg-background ${
           !isRecording ? "hidden" : "flex"
         }`}
       />
-      <div className="flex gap-4">
+      <div className="flex gap-2 lg:gap-4">
         {/* ========== Delete recording button ========== */}
         {isRecording ? (
           <Tooltip>
@@ -326,12 +335,15 @@ export const AudioRecorder = () => {
               </Button>
             ) : (
               <Button onClick={handleSubmit} size={"icon"}>
-                <Send size={15} />
+                <Download size={15} />
               </Button>
             )}
           </TooltipTrigger>
           <TooltipContent className="m-2">
-            <span> {!isRecording ? "Start recording" : "Stop recording"} </span>
+            <span>
+              {" "}
+              {!isRecording ? "Download recording" : "Stop recording"}{" "}
+            </span>
           </TooltipContent>
         </Tooltip>
       </div>
