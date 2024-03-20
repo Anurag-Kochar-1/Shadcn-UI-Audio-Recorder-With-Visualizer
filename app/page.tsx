@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/page";
 import { Github } from "lucide-react";
 import Link from "next/link";
-
 export default function Home() {
   return (
     <div className="container relative flex-1 flex flex-col justify-center items-center">
@@ -18,14 +17,14 @@ export default function Home() {
         <PageHeaderHeading>Audio recorder with visualizer.</PageHeaderHeading>
         <AudioRecorderWithVisualizer className="my-12 w-full max-w-full" />
         <PageHeaderDescription>
-          Just copy the source code by clicking below. No npm install required,
-          all under 400 lines of code.
+          Built on top of Shadcn UI. Simply copy the source code by clicking
+          below. No npm install required, all in under 400 lines of code
         </PageHeaderDescription>
         <PageActions>
           <Link
             target="_blank"
             rel="noreferrer"
-            href={`https://github.com/Anurag-Kochar-1/Shadcn-UI-Audio-Recorder-With-Visualizer/blob/master/components/audio-recorder-with-visualizer.tsx`}
+            href={`https://github.com/Anurag-Kochar-1/Shadcn-UI-Audio-Recorder-With-Visualizer`}
           >
             <Button variant={"secondary"} className="border-2">
               {" "}
