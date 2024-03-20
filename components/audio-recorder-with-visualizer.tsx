@@ -10,6 +10,11 @@ import { Download, Mic, Trash } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
+type Props = {
+  className?: string;
+  timerClassName?: string;
+};
+
 type Record = {
   id: number;
   name: string;
@@ -29,13 +34,16 @@ const padWithLeadingZeros = (num: number, length: number): string => {
 const downloadBlob = (blob: Blob) => {
   const downloadLink = document.createElement("a");
   downloadLink.href = URL.createObjectURL(blob);
-  downloadLink.download = `${new Date().getMilliseconds()}.mp3`;
+  downloadLink.download = `Audio_${new Date().getMilliseconds()}.mp3`;
   document.body.appendChild(downloadLink);
   downloadLink.click();
   document.body.removeChild(downloadLink);
 };
 
-export const AudioRecorderWithVisualizer = () => {
+export const AudioRecorderWithVisualizer = ({
+  className,
+  timerClassName,
+}: Props) => {
   const { theme } = useTheme();
   // States
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -148,20 +156,6 @@ export const AudioRecorderWithVisualizer = () => {
     clearTimeout(timerTimeout);
   }
   function resetRecording() {
-    // if (recorder) {
-    //   recorder.onstop = () => {
-    //     recordingChunks = [];
-    //   };
-    //   recorder.stop();
-    // } else {
-    //   alert("recorder instance is null!");
-    // }
-
-    // setIsRecording(false);
-    // setIsRecordingFinished(true);
-    // setTimer(0);
-    // clearTimeout(timerTimeout);
-
     const { mediaRecorder, stream, analyser, audioContext } =
       mediaRecorderRef.current;
 
@@ -238,7 +232,6 @@ export const AudioRecorderWithVisualizer = () => {
         const barHeight = Math.pow(dataArray[i] / 128.0, 8) * maxBarHeight;
         const x = (barWidth + spacing) * i;
         const y = HEIGHT / 2 - barHeight / 2;
-
         canvasCtx.fillRect(x, y, barWidth, barHeight);
       }
     };
@@ -284,11 +277,12 @@ export const AudioRecorderWithVisualizer = () => {
   return (
     <div
       className={cn(
-        "flex h-16 rounded-md w-full items-center justify-center gap-2 lg:gap-4 max-w-5xl",
+        "flex h-16 rounded-md relative w-full items-center justify-center gap-2 max-w-5xl",
         {
-          "border p-2": isRecording,
+          "border p-1": isRecording,
           "border-none p-0": !isRecording,
-        }
+        },
+        className
       )}
     >
       {isRecording ? (
@@ -299,6 +293,7 @@ export const AudioRecorderWithVisualizer = () => {
           minuteRight={minuteRight}
           secondLeft={secondLeft}
           secondRight={secondRight}
+          timerClassName={timerClassName}
         />
       ) : null}
       <canvas
@@ -307,7 +302,7 @@ export const AudioRecorderWithVisualizer = () => {
           !isRecording ? "hidden" : "flex"
         }`}
       />
-      <div className="flex gap-2 lg:gap-4">
+      <div className="flex gap-2">
         {/* ========== Delete recording button ========== */}
         {isRecording ? (
           <Tooltip>
@@ -342,7 +337,7 @@ export const AudioRecorderWithVisualizer = () => {
           <TooltipContent className="m-2">
             <span>
               {" "}
-              {!isRecording ? "Download recording" : "Stop recording"}{" "}
+              {!isRecording ? "Start recording" : "Download recording"}{" "}
             </span>
           </TooltipContent>
         </Tooltip>
@@ -359,6 +354,7 @@ const Timer = React.memo(
     minuteRight,
     secondLeft,
     secondRight,
+    timerClassName,
   }: {
     hourLeft: string;
     hourRight: string;
@@ -366,27 +362,33 @@ const Timer = React.memo(
     minuteRight: string;
     secondLeft: string;
     secondRight: string;
+    timerClassName?: string;
   }) => {
     return (
-      <div className="hidden items-center justify-center gap-1 font-mono font-medium text-foreground md:flex">
-        <span className="rounded-md border bg-background p-2 text-foreground">
+      <div
+        className={cn(
+          "items-center -top-12 left-0 absolute justify-center gap-0.5 border p-1.5 rounded-md font-mono font-medium text-foreground flex",
+          timerClassName
+        )}
+      >
+        <span className="rounded-md bg-background p-0.5 text-foreground">
           {hourLeft}
         </span>
-        <span className="rounded-md border bg-background p-2 text-foreground">
+        <span className="rounded-md bg-background p-0.5 text-foreground">
           {hourRight}
         </span>
         <span>:</span>
-        <span className="rounded-md border bg-background p-2 text-foreground">
+        <span className="rounded-md bg-background p-0.5 text-foreground">
           {minuteLeft}
         </span>
-        <span className="rounded-md border bg-background p-2 text-foreground">
+        <span className="rounded-md bg-background p-0.5 text-foreground">
           {minuteRight}
         </span>
         <span>:</span>
-        <span className="rounded-md border bg-background p-2 text-foreground">
+        <span className="rounded-md bg-background p-0.5 text-foreground">
           {secondLeft}
         </span>
-        <span className="rounded-md border bg-background p-2 text-foreground ">
+        <span className="rounded-md bg-background p-0.5 text-foreground ">
           {secondRight}
         </span>
       </div>
