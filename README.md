@@ -1,4 +1,4 @@
-# Audio recorder with visualizer component by [@anurag__kochar](https://twitter.com/anurag__kochar)
+# Audio recorder with visualizer component by [@anurag\_\_kochar](https://twitter.com/anurag__kochar)
 
 ### Built on top of Shadcn ui & Simply copy paste the code from below code
 
@@ -6,10 +6,9 @@
 
 > ⚠ Make sure to have the [tooltip](https://ui.shadcn.com/docs/components/tooltip) and [button](https://ui.shadcn.com/docs/components/button) components from shadcn UI, and wrap the `TooltipProvider` around the children in the layout.
 
+> ⭐ If you find this repository useful, please consider giving it a star.
 
->⭐ If you find this repository useful, please consider giving it a star.
-
->🌆 Landing page is inspired from [input-otp](https://input-otp.rodz.dev/)
+> 🌆 Landing page is inspired from [input-otp](https://input-otp.rodz.dev/)
 
 ```tsx
 "use client";
@@ -123,11 +122,11 @@ export const AudioRecorderWithVisualizer = ({
             audioContext: audioCtx,
           };
 
-          const mimeType = MediaRecorder.isTypeSupported("audio/webm")
+          const mimeType = MediaRecorder.isTypeSupported("audio/mpeg")
+            ? "audio/mpeg"
+            : MediaRecorder.isTypeSupported("audio/webm")
             ? "audio/webm"
-            : MediaRecorder.isTypeSupported("audio/wav")
-            ? "audio/wav"
-            : "audio/mpeg";
+            : "audio/wav";
 
           const options = { mimeType };
           mediaRecorderRef.current.mediaRecorder = new MediaRecorder(
@@ -152,7 +151,7 @@ export const AudioRecorderWithVisualizer = ({
   function stopRecording() {
     recorder.onstop = () => {
       const recordBlob = new Blob(recordingChunks, {
-        type: "audio/ogg; codecs=opus",
+        type: "audio/wav",
       });
       downloadBlob(recordBlob);
       setCurrentRecord({
@@ -411,5 +410,3 @@ const Timer = React.memo(
 );
 Timer.displayName = "Timer";
 ```
-
-
