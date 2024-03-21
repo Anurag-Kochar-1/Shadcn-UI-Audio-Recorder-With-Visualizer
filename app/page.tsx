@@ -11,7 +11,7 @@ import { Github } from "lucide-react";
 import Link from "next/link";
 export default function Home() {
   return (
-    <div className="container relative flex-1 flex flex-col justify-center items-center">
+    <div className="container relative flex-1 flex flex-col justify-center items-center min-h-screen">
       <Particles className="absolute inset-0 -z-10 " />
       <PageHeader>
         <PageHeaderHeading>Audio recorder with visualizer.</PageHeaderHeading>

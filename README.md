@@ -1,4 +1,4 @@
-# Audio recorder with visualizer component by [Anurag kochar](https://anurag-kochar-os-portfolio.vercel.app/)
+# Audio recorder with visualizer component by [@anurag__kochar](https://twitter.com/anurag__kochar)
 
 ### Built on top of Shadcn ui & Simply copy paste the code from below code
 
