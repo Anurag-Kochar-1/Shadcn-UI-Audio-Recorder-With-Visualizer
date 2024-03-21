@@ -109,11 +109,11 @@ export const AudioRecorderWithVisualizer = ({
             audioContext: audioCtx,
           };
 
-          const mimeType = MediaRecorder.isTypeSupported("audio/webm")
+          const mimeType = MediaRecorder.isTypeSupported("audio/mpeg")
+            ? "audio/mpeg"
+            : MediaRecorder.isTypeSupported("audio/webm")
             ? "audio/webm"
-            : MediaRecorder.isTypeSupported("audio/wav")
-            ? "audio/wav"
-            : "audio/mpeg";
+            : "audio/wav";
 
           const options = { mimeType };
           mediaRecorderRef.current.mediaRecorder = new MediaRecorder(
@@ -138,7 +138,7 @@ export const AudioRecorderWithVisualizer = ({
   function stopRecording() {
     recorder.onstop = () => {
       const recordBlob = new Blob(recordingChunks, {
-        type: "audio/ogg; codecs=opus",
+        type: "audio/wav",
       });
       downloadBlob(recordBlob);
       setCurrentRecord({
