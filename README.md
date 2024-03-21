@@ -6,6 +6,11 @@
 
 > ⚠ Make sure to have the [tooltip](https://ui.shadcn.com/docs/components/tooltip) and [button](https://ui.shadcn.com/docs/components/button) components from shadcn UI, and wrap the `TooltipProvider` around the children in the layout.
 
+
+>⭐ If you find this repository useful, please consider giving it a star.
+
+>🌆 Landing page is inspired from [input-otp](https://input-otp.rodz.dev/)
+
 ```tsx
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -407,4 +412,4 @@ const Timer = React.memo(
 Timer.displayName = "Timer";
 ```
 
-⭐ If you find this repository useful, please consider giving it a star.
+
